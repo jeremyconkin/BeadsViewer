@@ -43,6 +43,13 @@ export function FilterBar({
     selectedPriority !== null ||
     selectedType !== null;
 
+  const allButtonClass =
+    "h-7 text-xs font-semibold bg-foreground text-background hover:bg-foreground/90";
+  const selectedButtonClass =
+    "h-7 text-xs font-medium bg-primary text-primary-foreground hover:bg-primary/90";
+  const unselectedButtonClass =
+    "h-7 text-xs font-medium border-border text-muted-foreground hover:text-foreground hover:bg-accent";
+
   return (
     <div className="flex flex-col gap-3 px-4 py-3 border-b">
       {/* Search */}
@@ -58,18 +65,35 @@ export function FilterBar({
 
       {/* Status toggles */}
       <div className="flex flex-wrap items-center gap-2">
-        <span className="text-xs font-medium text-muted-foreground">
-          Status:
-        </span>
+        <span className="text-xs font-semibold text-foreground">Status:</span>
+        <Button
+          variant={selectedStatuses.length === 0 ? "default" : "outline"}
+          size="sm"
+          onClick={() => {
+            // Clear all status selections
+            selectedStatuses.forEach((s) => onStatusToggle(s));
+          }}
+          className={
+            selectedStatuses.length === 0
+              ? allButtonClass
+              : unselectedButtonClass
+          }
+        >
+          All
+        </Button>
         {BEAD_STATUSES.map((s) => (
           <Button
             key={s.value}
             variant={
-              selectedStatuses.includes(s.value) ? "secondary" : "outline"
+              selectedStatuses.includes(s.value) ? "default" : "outline"
             }
             size="sm"
             onClick={() => onStatusToggle(s.value)}
-            className="h-7 text-xs"
+            className={
+              selectedStatuses.includes(s.value)
+                ? selectedButtonClass
+                : unselectedButtonClass
+            }
           >
             {s.label}
           </Button>
@@ -79,7 +103,7 @@ export function FilterBar({
       {/* Labels */}
       {availableLabels.length > 0 && (
         <div className="flex flex-wrap items-center gap-2">
-          <span className="text-xs font-medium text-muted-foreground">
+          <span className="text-xs font-semibold text-foreground">
             Labels:
           </span>
           {availableLabels.map((label) => (
@@ -88,7 +112,11 @@ export function FilterBar({
               variant={
                 selectedLabels.includes(label) ? "default" : "outline"
               }
-              className="cursor-pointer"
+              className={
+                selectedLabels.includes(label)
+                  ? "cursor-pointer font-medium"
+                  : "cursor-pointer font-medium text-muted-foreground hover:text-foreground"
+              }
               onClick={() => onLabelToggle(label)}
             >
               {label}
@@ -100,24 +128,32 @@ export function FilterBar({
       {/* Priority and Type */}
       <div className="flex flex-wrap items-center gap-4">
         <div className="flex items-center gap-2">
-          <span className="text-xs font-medium text-muted-foreground">
+          <span className="text-xs font-semibold text-foreground">
             Priority:
           </span>
           <Button
-            variant={selectedPriority === null ? "secondary" : "outline"}
+            variant={selectedPriority === null ? "default" : "outline"}
             size="sm"
             onClick={() => onPriorityChange(null)}
-            className="h-7 text-xs"
+            className={
+              selectedPriority === null
+                ? allButtonClass
+                : unselectedButtonClass
+            }
           >
             All
           </Button>
           {PRIORITIES.map((p) => (
             <Button
               key={p.value}
-              variant={selectedPriority === p.value ? "secondary" : "outline"}
+              variant={selectedPriority === p.value ? "default" : "outline"}
               size="sm"
               onClick={() => onPriorityChange(p.value)}
-              className="h-7 text-xs"
+              className={
+                selectedPriority === p.value
+                  ? selectedButtonClass
+                  : unselectedButtonClass
+              }
             >
               {p.label}
             </Button>
@@ -125,24 +161,28 @@ export function FilterBar({
         </div>
 
         <div className="flex items-center gap-2">
-          <span className="text-xs font-medium text-muted-foreground">
-            Type:
-          </span>
+          <span className="text-xs font-semibold text-foreground">Type:</span>
           <Button
-            variant={selectedType === null ? "secondary" : "outline"}
+            variant={selectedType === null ? "default" : "outline"}
             size="sm"
             onClick={() => onTypeChange(null)}
-            className="h-7 text-xs"
+            className={
+              selectedType === null ? allButtonClass : unselectedButtonClass
+            }
           >
             All
           </Button>
           {ISSUE_TYPES.map((type) => (
             <Button
               key={type}
-              variant={selectedType === type ? "secondary" : "outline"}
+              variant={selectedType === type ? "default" : "outline"}
               size="sm"
               onClick={() => onTypeChange(type)}
-              className="h-7 text-xs capitalize"
+              className={
+                selectedType === type
+                  ? selectedButtonClass + " capitalize"
+                  : unselectedButtonClass + " capitalize"
+              }
             >
               {type}
             </Button>
@@ -155,7 +195,7 @@ export function FilterBar({
             variant="ghost"
             size="sm"
             onClick={onClearFilters}
-            className="h-7 text-xs text-muted-foreground"
+            className="h-7 text-xs font-medium text-destructive hover:text-destructive"
           >
             <X className="h-3 w-3 mr-1" />
             Clear filters
