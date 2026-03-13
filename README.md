@@ -1,36 +1,66 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Beads Viewer
+
+A local web application for viewing and managing [beads](https://github.com/steveyegge/beads/) tasks. Browse to any project directory with a `.beads/` folder and interact with your issues through a kanban board or tree view.
+
+## Screenshots
+
+### Kanban View
+Drag-and-drop tasks between status columns (Open, In Progress, Blocked, Deferred, Closed).
+
+![Kanban View](docs/screenshots/kanban-view.png)
+
+### Tree View
+A flat list with status and priority badges, filterable by any combination of criteria.
+
+![Tree View](docs/screenshots/tree-view.png)
+
+## Features
+
+- **Kanban board** with drag-and-drop to change task status
+- **Tree view** for a compact list of all tasks
+- **Filtering** by status, priority, type, labels, and free-text search
+- **Task editing** via a detail dialog (title, description, status, priority, type, labels, assignee, due date, notes)
+- **Directory picker** to switch between beads projects
+- **Persists** last-used directory in localStorage
+
+## Prerequisites
+
+- [Node.js](https://nodejs.org/) v18+
+- [beads](https://github.com/steveyegge/beads/) CLI (`bd`) installed and on your PATH
+- At least one project with `bd init` already run
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+# Clone the repo
+git clone https://github.com/jeremyconkin/BeadsViewer.git
+cd BeadsViewer
+
+# Install dependencies
+npm install
+
+# Start the dev server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000), paste the path to a beads-enabled project directory, and click **Open**.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Tech Stack
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Layer | Technology |
+|-------|-----------|
+| Framework | Next.js 14 (App Router) |
+| Language | TypeScript |
+| UI | shadcn/ui (Radix + Tailwind CSS) |
+| Drag & Drop | react-dnd |
+| Icons | lucide-react |
+| Toasts | sonner |
+| Backend | Next.js API routes shelling out to `bd` CLI |
 
-## Learn More
+## How It Works
 
-To learn more about Next.js, take a look at the following resources:
+The app runs a local Next.js server. API routes execute `bd list --json`, `bd show`, and `bd update` commands against the selected project directory. The frontend reads the JSON output and renders it in the chosen view.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## License
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT
