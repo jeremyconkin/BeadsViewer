@@ -1,0 +1,34 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(claude mcp add:*)",
+      "Bash(claude mcp list:*)",
+      "Bash(/usr/local/bin/claude doctor:*)",
+      "Bash(claude mcp:*)",
+      "WebSearch",
+      "Bash(claude plugin install figma@claude-plugins-official)",
+      "mcp__plugin_figma_figma__generate_diagram",
+      "mcp__plugin_figma_figma__get_figjam",
+      "mcp__plugin_figma_figma__get_design_context",
+      "WebFetch(domain:github.com)",
+      "Bash(gh api:*)",
+      "Bash(npx create-next-app@latest . --typescript --tailwind --eslint --app --src-dir --no-import-alias --use-npm 2>&1)",
+      "Bash(nvm --version)",
+      "Bash(fnm --version)",
+      "Bash(volta --version)",
+      "Bash(brew list:*)",
+      "Read(//usr/local/**)",
+      "Read(//Users/jeremyconkin/.nvm/versions/node/**)",
+      "Bash(source ~/.nvm/nvm.sh && nvm ls 2>/dev/null | head -20)",
+      "Bash(echo $NVM_DIR)",
+      "Read(//Users/jeremyconkin/Developer/BeadsViewer/$NVM_DIR/**)",
+      "Read(//opt/homebrew/opt/**)",
+      "Bash(ls /usr/local/opt/node*/bin/node)",
+      "Read(//opt/homebrew/Cellar/node/24.3.0/bin/**)",
+      "Bash(brew --prefix node)",
+      "Bash(/opt/homebrew/opt/node@24/bin/node --version && /opt/homebrew/opt/node/bin/node --version)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
