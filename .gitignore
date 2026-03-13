@@ -16,6 +16,9 @@
 # production
 /build
 
+# beads
+.beads/
+
 # misc
 .DS_Store
 *.pem
