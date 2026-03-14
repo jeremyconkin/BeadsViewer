@@ -60,7 +60,6 @@ export const BEAD_STATUSES: { value: BeadStatus; label: string; color: string }[
   { value: "in_progress", label: "In Progress", color: "blue" },
   { value: "blocked", label: "Blocked", color: "red" },
   { value: "deferred", label: "Deferred", color: "amber" },
-  { value: "closed", label: "Closed", color: "green" },
 ];
 
 export const ISSUE_TYPES = ["bug", "feature", "task", "epic", "chore", "decision"] as const;

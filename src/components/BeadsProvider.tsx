@@ -27,6 +27,7 @@ interface BeadsContextValue {
   searchQuery: string;
   selectedPriority: number | null;
   selectedType: string | null;
+  showClosed: boolean;
 
   // Computed
   availableLabels: string[];
@@ -49,6 +50,7 @@ interface BeadsContextValue {
   setSearchQuery: (query: string) => void;
   setPriority: (priority: number | null) => void;
   setType: (type: string | null) => void;
+  setShowClosed: (show: boolean) => void;
   clearFilters: () => void;
 }
 
@@ -66,9 +68,12 @@ function filterFlatTasks(
   selectedLabels: string[],
   searchQuery: string,
   selectedPriority: number | null,
-  selectedType: string | null
+  selectedType: string | null,
+  showClosed: boolean
 ): Task[] {
   return flatTasks.filter((task) => {
+    // Closed is a separate toggle, independent of status filters
+    if (task.status === "closed") return showClosed;
     // Status filter
     if (
       selectedStatuses.length > 0 &&
@@ -121,6 +126,7 @@ export function BeadsProvider({ children }: { children: ReactNode }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedPriority, setSelectedPriority] = useState<number | null>(null);
   const [selectedType, setSelectedType] = useState<string | null>(null);
+  const [showClosed, setShowClosed] = useState(false);
 
   // View
   const [currentView, setCurrentView] = useState<"kanban" | "tree">("kanban");
@@ -265,6 +271,7 @@ export function BeadsProvider({ children }: { children: ReactNode }) {
     setSearchQuery("");
     setSelectedPriority(null);
     setSelectedType(null);
+    setShowClosed(false);
   }, []);
 
   // Computed values
@@ -286,7 +293,8 @@ export function BeadsProvider({ children }: { children: ReactNode }) {
         selectedLabels,
         searchQuery,
         selectedPriority,
-        selectedType
+        selectedType,
+        showClosed
       ),
     [
       flatTasks,
@@ -295,19 +303,11 @@ export function BeadsProvider({ children }: { children: ReactNode }) {
       searchQuery,
       selectedPriority,
       selectedType,
+      showClosed,
     ]
   );
 
   const filteredTasks = useMemo(() => {
-    if (
-      selectedStatuses.length === 0 &&
-      selectedLabels.length === 0 &&
-      !searchQuery &&
-      selectedPriority === null &&
-      selectedType === null
-    ) {
-      return tasks;
-    }
     // Get IDs of filtered flat tasks, then rebuild tree keeping parent chains
     const filteredIds = new Set(filteredFlatTasks.map((t) => t.id));
 
@@ -331,6 +331,7 @@ export function BeadsProvider({ children }: { children: ReactNode }) {
     searchQuery,
     selectedPriority,
     selectedType,
+    showClosed,
   ]);
 
   const value: BeadsContextValue = {
@@ -345,6 +346,7 @@ export function BeadsProvider({ children }: { children: ReactNode }) {
     searchQuery,
     selectedPriority,
     selectedType,
+    showClosed,
     availableLabels,
     filteredTasks,
     filteredFlatTasks,
@@ -359,6 +361,7 @@ export function BeadsProvider({ children }: { children: ReactNode }) {
     setSearchQuery,
     setPriority: setSelectedPriority,
     setType: setSelectedType,
+    setShowClosed: setShowClosed,
     clearFilters,
   };
 

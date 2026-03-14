@@ -19,6 +19,8 @@ interface FilterBarProps {
   onSearchChange: (query: string) => void;
   onPriorityChange: (priority: number | null) => void;
   onTypeChange: (type: string | null) => void;
+  showClosed: boolean;
+  onShowClosedChange: (show: boolean) => void;
   onClearFilters: () => void;
 }
 
@@ -34,6 +36,8 @@ export function FilterBar({
   onSearchChange,
   onPriorityChange,
   onTypeChange,
+  showClosed,
+  onShowClosedChange,
   onClearFilters,
 }: FilterBarProps) {
   const hasActiveFilters =
@@ -41,7 +45,8 @@ export function FilterBar({
     selectedLabels.length > 0 ||
     searchQuery.length > 0 ||
     selectedPriority !== null ||
-    selectedType !== null;
+    selectedType !== null ||
+    showClosed;
 
   const allButtonClass =
     "h-7 text-xs font-semibold bg-foreground text-background hover:bg-foreground/90";
@@ -98,6 +103,17 @@ export function FilterBar({
             {s.label}
           </Button>
         ))}
+        <span className="mx-1 text-border">|</span>
+        <Button
+          variant={showClosed ? "default" : "outline"}
+          size="sm"
+          onClick={() => onShowClosedChange(!showClosed)}
+          className={
+            showClosed ? selectedButtonClass : unselectedButtonClass
+          }
+        >
+          Closed
+        </Button>
       </div>
 
       {/* Labels */}

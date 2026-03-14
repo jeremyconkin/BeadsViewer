@@ -35,6 +35,8 @@ export default function Home() {
     setSearchQuery,
     setPriority,
     setType,
+    showClosed,
+    setShowClosed,
     clearFilters,
   } = useBeads();
 
@@ -86,6 +88,8 @@ export default function Home() {
         onSearchChange={setSearchQuery}
         onPriorityChange={setPriority}
         onTypeChange={setType}
+        showClosed={showClosed}
+        onShowClosedChange={setShowClosed}
         onClearFilters={clearFilters}
       />
 
