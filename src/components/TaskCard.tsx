@@ -26,7 +26,10 @@ export function TaskCard({ task, onClick, isDragging }: TaskCardProps) {
       onClick={onClick}
     >
       <CardContent className="p-3 space-y-2">
-        <p className="font-medium text-sm leading-tight">{task.title}</p>
+        <p className="font-medium text-sm leading-tight">
+          <span className="font-mono text-xs text-muted-foreground mr-1.5">{task.id}</span>
+          {task.title}
+        </p>
         {task.description && (
           <p className="text-sm text-muted-foreground line-clamp-2">
             {task.description}

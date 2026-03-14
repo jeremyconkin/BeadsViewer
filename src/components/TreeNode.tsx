@@ -47,8 +47,9 @@ export function TreeNode({ task, level, onTaskClick }: TreeNodeProps) {
         ) : (
           <span className="w-5 shrink-0" />
         )}
-        <span className="text-sm font-medium truncate flex-1">
-          {task.title}
+        <span className="text-sm truncate flex-1">
+          <span className="font-mono text-xs text-muted-foreground mr-1.5">{task.id}</span>
+          <span className="font-medium">{task.title}</span>
         </span>
         <StateIndicator status={task.status} size="sm" />
         <PriorityBadge priority={task.priority} size="sm" />
