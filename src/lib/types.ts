@@ -32,8 +32,12 @@ export interface BeadIssue {
 }
 
 export interface BeadDependency {
-  target_id: string;
-  dep_type: string;
+  issue_id: string;
+  depends_on_id: string;
+  type: string;
+  created_at?: string;
+  created_by?: string;
+  metadata?: string;
 }
 
 export interface Task {

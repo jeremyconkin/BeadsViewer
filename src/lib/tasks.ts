@@ -42,12 +42,13 @@ export function buildTaskTree(issues: BeadIssue[]): Task[] {
     }
 
     // Check parent-child dependencies
+    // depends_on_id points to the parent, so this task is the child
     const issue = task.raw;
     let foundParent = false;
     if (issue.dependencies) {
       for (const dep of issue.dependencies) {
-        if (dep.dep_type === "parent-child") {
-          const parent = taskMap.get(dep.target_id);
+        if (dep.type === "parent-child") {
+          const parent = taskMap.get(dep.depends_on_id);
           if (parent) {
             parent.children.push(task);
             foundParent = true;
@@ -61,6 +62,15 @@ export function buildTaskTree(issues: BeadIssue[]): Task[] {
       roots.push(task);
     }
   }
+
+  // Sort by priority (ascending), then title
+  const sortTasks = (list: Task[]) => {
+    list.sort((a, b) => a.priority - b.priority || a.title.localeCompare(b.title));
+    for (const t of list) {
+      if (t.children.length > 0) sortTasks(t.children);
+    }
+  };
+  sortTasks(roots);
 
   return roots;
 }
