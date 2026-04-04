@@ -40,7 +40,7 @@ export async function execBd(args: string[], cwd: string): Promise<string> {
  * Uses --limit 0 for unlimited and --all to include closed issues.
  */
 export async function listIssues(dir: string): Promise<BeadIssue[]> {
-  const stdout = await execBd(["list", "--limit", "0", "--all"], dir);
+  const stdout = await execBd(["list", "--limit", "0", "--all", "--flat"], dir);
   if (!stdout.trim()) {
     return [];
   }

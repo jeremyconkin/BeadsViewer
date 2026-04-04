@@ -15,7 +15,7 @@ interface TreeNodeProps {
 }
 
 export function TreeNode({ task, level, onTaskClick }: TreeNodeProps) {
-  const [isExpanded, setIsExpanded] = useState(true);
+  const [isExpanded, setIsExpanded] = useState(false);
   const hasChildren = task.children.length > 0;
   const paddingLeft = level * 24 + 8;
   const visibleLabels = task.labels.slice(0, 2);
