@@ -129,7 +129,7 @@ export function BeadsProvider({ children }: { children: ReactNode }) {
   const [showClosed, setShowClosed] = useState(false);
 
   // View
-  const [currentView, setCurrentView] = useState<"kanban" | "tree">("kanban");
+  const [currentView, setCurrentView] = useState<"kanban" | "tree">("tree");
 
   // Load saved directory on mount and fetch tasks
   useEffect(() => {
