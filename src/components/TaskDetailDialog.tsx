@@ -48,6 +48,7 @@ export function TaskDetailDialog({
   const [assignee, setAssignee] = useState("");
   const [dueAt, setDueAt] = useState("");
   const [notes, setNotes] = useState("");
+  const [design, setDesign] = useState("");
 
   useEffect(() => {
     if (task) {
@@ -59,6 +60,7 @@ export function TaskDetailDialog({
       setLabels([...task.labels]);
       setAssignee(task.assignee);
       setDueAt(task.dueAt || "");
+      setDesign(task.design);
       setNotes("");
       setNewLabel("");
     }
@@ -83,6 +85,7 @@ export function TaskDetailDialog({
 
     if (title !== task.title) updates.title = title;
     if (description !== task.description) updates.description = description;
+    if (design !== task.design) updates.design = design;
     if (status !== task.status) updates.status = status;
     if (priority !== task.priority) updates.priority = priority;
     if (issueType !== task.issueType) updates.issueType = issueType;
@@ -126,6 +129,17 @@ export function TaskDetailDialog({
               id="task-description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
+              rows={6}
+            />
+          </div>
+
+          {/* Design */}
+          <div className="space-y-2">
+            <Label htmlFor="task-design">Design</Label>
+            <Textarea
+              id="task-design"
+              value={design}
+              onChange={(e) => setDesign(e.target.value)}
               rows={6}
             />
           </div>

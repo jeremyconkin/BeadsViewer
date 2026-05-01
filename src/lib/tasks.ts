@@ -17,6 +17,7 @@ export function beadToTask(issue: BeadIssue): Task {
     dueAt: issue.due_at ?? null,
     estimatedMinutes: issue.estimated_minutes ?? null,
     notes: issue.notes || "",
+    design: issue.design || "",
     raw: issue,
   };
 }

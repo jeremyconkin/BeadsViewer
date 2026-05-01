@@ -56,6 +56,7 @@ export interface Task {
   dueAt: string | null;
   estimatedMinutes: number | null;
   notes: string;
+  design: string;
   raw: BeadIssue;
 }
 
